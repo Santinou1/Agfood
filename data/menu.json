@@ -1,0 +1,65 @@
+{
+    "menuDelDia": [
+      "Milanesa con ensalada",
+      "Milanesa a la fugazetta con puré",
+      "Omelette de espinaca con calabaza, queso y ensalada",
+      "Salteado al wok con fideos y vegetales",
+      "Sandwich de milanesa, lechuga y tomate",
+      "Ravioles Caseros con Salsa Scarparo"
+    ],
+    "empanadas": [
+      "Pollo",
+      "JQ",
+      "Matambre",
+      "Bondiola",
+      "Carne",
+      "CQ",
+      "verdura",
+      "Calabaza",
+      "Capresse"
+    ],
+    "tartas": [
+      "Jamón y queso",
+      "Cebolla y queso",
+      "Verdura (acelga, huevo, queso y salsa blanca)",
+      "Pollo",
+      "Calabaza y queso mozzarella",
+      "Brócoli",
+      "Zapallito",
+      "Pollo y champiñones (consultar)",
+      "Capresse (tomate, queso y albahaca)",
+      "Atún (consultar)"
+    ],
+    "pastasCocidas": [
+      "Fideos cintas al huevo",
+      "Fideos cintas de espinaca",
+      "Fucciles",
+      "Ñoquis de papa",
+      "Ñoquis de espinaca o calabaza (consultar)",
+      "Sorrentinos de jamón y queso",
+      "Triangulitos de 4 quesos"
+    ],
+    "ravioles": [
+      "Ricota y parmesano",
+      "Napolitanos (espinaca, muzarella y verdeo)",
+      "Especiales (pollo, verdura y provolone)",
+      "Calabaza (calabaza, queso por salud y verdeo)",
+      "Caseros (verdura, carne y queso)",
+      "Serranos (espinaca, queso y jamón crudo)",
+      "Munich (ricota, panceta ahumada y verdeo)",
+      "Piamonteses (ricota, queso por salud y jamón cocido)",
+      "Capeletis (consultar)"
+    ],
+    "salsas": [
+      "Bolognesa",
+      "Salsa blanca",
+      "Fileto",
+      "Mixta (fileto con blanca)",
+      "Rosa (fileto con crema)",
+      "Pesto",
+      "Crema",
+      "Manteca",
+      "Aceite de oliva o de maíz"
+    ]
+  }
+  

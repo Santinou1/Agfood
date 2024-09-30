@@ -1,0 +1,81 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: aliceblue;
+}
+
+.container {
+    max-width: 500px;
+    width: 100%;
+    height: auto;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin: 15px auto;
+    padding-bottom: 19px;
+    border-radius: 15px;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: flex;
+    margin-bottom: 5px;
+}
+
+select, input {
+    width: 100%;
+    padding: 8px;
+    border-radius: 10px;
+    box-sizing: border-box;
+}
+
+button {
+    padding: 10px 15px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    border-radius: 10px;
+    margin-top: 10px;
+}
+
+ul {
+    list-style: none;
+    padding-left: 0;
+    margin-left: 0;
+}
+
+#resetForm {
+    display: none;
+    margin-top: 10px;
+    background-color: #d91600;
+    width: 100%;    
+}
+    
+.empanada-group{
+    display:flex;
+    align-items: center;
+    margin: 20px;
+}
+
+.empanada-label {
+    margin-bottom: 10px; /* Espacio debajo de la etiqueta */
+    font-weight: bold;
+}
+
+/* Estilo de los checkboxes */
+.empanada-checkbox {
+    margin-bottom: 5px; /* Espacio entre los checkboxes */
+}
+
+.empanada-checkbox.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
