@@ -1,91 +1,98 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Formulario de Pedido</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h2>Formulario de Pedido</h2>
 
-<!-- Título y formulario principal para realizar un pedido -->
-<div class="container">
-    <h2>Formulario de Pedido</h2>
-
-    <form id="pedidoForm" method="POST" action="/api/pedidos/guardarPedido">
+      <form id="pedidoForm" method="POST" action="/api/pedidos/guardarPedido">
         <div class="form-group">
-            <label for="nombre">Nombre:</label>
-            <input type="text" id="nombre" name="nombre" required>
+          <label for="nombre">Nombre:</label>
+          <input type="text" id="nombre" name="nombre" required />
         </div>
 
         <div class="form-group">
-            <label for="menuDelDia">Menú del Día:</label>
-            <select id="menuDelDia" name="comida" required>
-                <option value="">Menú del Día</option>
-            </select>
+          <label for="menuDelDia">Menú del Día:</label>
+          <select id="menuDelDia" name="menuDelDia" required>
+            <option value="">Menú del Día</option>
+          </select>
         </div>
 
-        <!-- Dropdown para Empanadas -->
         <div class="form-group">
-            <label for="empanadasSelect">¿Deseas empanadas?:</label>
-            <select id="empanadasSelect" name="empanadasSelect">
-                <option value="">Seleccionar</option>
-                <option value="SI">SI</option>
-                <option value="NO">NO</option>
-            </select>
+          <label for="empanadasSelect">¿Deseas empanadas?:</label>
+          <select id="empanadasSelect" name="empanadasSelect">
+            <option value="">Seleccionar</option>
+            <option value="SI">SI</option>
+            <option value="NO">NO</option>
+          </select>
         </div>
 
-       <!-- Contenedor de empanadas, inicialmente oculto -->
-<div id="empanadas" class="empanada-container" style="display: none;">
-    <!-- Los checkboxes se insertarán aquí mediante JavaScript -->
-</div>
+        <div id="empanadas" class="empanada-container" style="display: none">
+          <!-- Los checkboxes de empanadas se insertarán aquí mediante JavaScript -->
+        </div>
 
         <div class="form-group">
-            <label for="tartas">Tartas:</label>
-            <select id="tartas" name="comida" required>
-                <option value="">Tartas</option>
-            </select>
+          <label for="ensaladas">Ensaladas:</label>
+          <select id="ensaladas" name="ensaladas">
+            <option value="">Selecciona una ensalada</option>
+          </select>
         </div>
-        <div class="form-group">
-            <label for="pastasCocidas">Pastas Cocidas:</label>
-            <select id="pastasCocidas" name="comida" required>
-                <option value="">Pastas Cocidas</option>
-            </select>
+
+        <div id="ingredientsContainer" style="display: none;">
+          <h3>Selecciona los Ingredientes:</h3>
+          <ul id="ingredientList"></ul>
         </div>
+
         <div class="form-group">
-            <label for="ravioles">Ravioles:</label>
-            <select id="ravioles" name="comida" required>
-                <option value="">Ravioles</option>
-            </select>
+          <label for="tartas">Tartas:</label>
+          <select id="tartas" name="tartas" required>
+            <option value="">Tartas</option>
+          </select>
         </div>
+        
         <div class="form-group">
-            <label for="salsas">Salsas:</label>
-            <select id="salsas" name="comida" required>
-                <option value="">Salsas</option>
-            </select>
+          <label for="pastasCocidas">Pastas Cocidas:</label>
+          <select id="pastasCocidas" name="pastasCocidas" required>
+            <option value="">Pastas Cocidas</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="ravioles">Ravioles:</label>
+          <select id="ravioles" name="ravioles" required>
+            <option value="">Ravioles</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="salsas">Salsas:</label>
+          <select id="salsas" name="salsas" required>
+            <option value="">Salsas</option>
+          </select>
         </div>
 
         <button type="submit">Enviar Pedido</button>
-    </form>
+      </form>
 
-    <!-- Botón para restablecer selecciones de menú -->
-    <button id="resetForm">Restablecer selecciones</button>
-</div>
+      <button id="resetForm">Restablecer selecciones</button>
+    </div>
 
-<!-- Sección para buscar pedidos por fecha y descargar Excel -->
-<div class="container">
-    <section id="buscarPorFecha">
+    <div class="container">
+      <section id="buscarPorFecha">
         <h2>Buscar Pedidos por Fecha</h2>
         <form id="buscarFechaForm">
-            <label for="fecha">Seleccionar Fecha:</label>
-            <input type="date" id="fecha" name="fecha" required>
-            <button type="submit">Buscar y Descargar</button>
+          <label for="fecha">Seleccionar Fecha:</label>
+          <input type="date" id="fecha" name="fecha" required />
+          <button type="submit">Buscar y Descargar</button>
         </form>
-    </section>
-</div>
+      </section>
+    </div>
 
-<!-- Script JavaScript -->
-<script src="script.js"></script>
-
-</body>
+    <script src="script.js"></script>
+  </body>
 </html>

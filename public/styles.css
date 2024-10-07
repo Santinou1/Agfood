@@ -79,3 +79,10 @@ ul {
     cursor: not-allowed;
 }
 
+#ingredientsContainer {
+    display: flex;
+    flex-wrap: wrap; /* Permitir que los elementos se ajusten en varias filas */
+    gap: 40px; /* Espacio entre los ingredientes */
+}
+
+

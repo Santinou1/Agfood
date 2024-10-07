@@ -9,6 +9,7 @@ const pedidoSchema = new mongoose.Schema({
     pastasCocidas: { type: String }, // Opción seleccionada para pastas cocidas
     ravioles: { type: String }, // Opción seleccionada para ravioles
     salsas: { type: String }, // Opción seleccionada para salsas
+    ensalada: { type: String }, // Opción seleccionada para ensalada
     fecha: { type: Date, default: Date.now }, // Fecha del pedido (por defecto, fecha actual)
     fechaFormateada1: { type: String }, // Fecha formateada en formato personalizado
 });

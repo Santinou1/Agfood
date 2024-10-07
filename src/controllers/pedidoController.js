@@ -55,6 +55,7 @@ const obtenerPedidosPorFecha = (req, res) => {
                 pedido.pastasCocidas,
                 pedido.ravioles,
                 pedido.salsas,
+                pedido.ensalada
             ].filter((comida) => comida), // Filtrar comidas vacías
         }));
         
@@ -94,6 +95,7 @@ const exportarPedidosExcel = (req, res) => {
                 pedido.pastasCocidas,
                 pedido.ravioles,
                 pedido.salsas,
+                pedido.ensalada
             ].filter((comida) => comida), // Filtrar comidas vacías
         }));
 
