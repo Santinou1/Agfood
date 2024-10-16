@@ -1,12 +1,14 @@
 const express = require('express');
+const session = require('express-session'); // Importar express-session
 const path = require('path');
-const connectDB = require('./src/db'); // Importa la función de conexión a MongoDB
-const menuRoutes = require('./src/routes/menuRoutes'); // Importa las rutas del menú
-const pedidoRoutes = require('./src/routes/pedidoRoutes'); // Importa las rutas de pedidos
+const connectDB = require('./src/db');
+const menuRoutes = require('./src/routes/menuRoutes');
+const pedidoRoutes = require('./src/routes/pedidoRoutes');
+const adminRoutes = require('./src/routes/adminRoutes'); // Importar las rutas de admin
 
-const app = express(); // Crea una instancia de la aplicación Express
+const app = express();
 
-// Conectar a MongoDB usando la función importada de db.js
+// Conectar a MongoDB
 connectDB();
 
 // Configurar EJS como motor de plantillas
@@ -20,16 +22,24 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Configuración de las rutas para el API de menú y pedidos
+// Configurar sesiones
+app.use(session({
+    secret: 'tu-secreto', // Cambia esto a una cadena aleatoria en producción
+    resave: false,
+    saveUninitialized: true,
+}));
+
+// Configuración de las rutas
 app.use('/api/menu', menuRoutes);
 app.use('/api/pedidos', pedidoRoutes);
+app.use('/admin', adminRoutes); // Usar las rutas de admin
 
-// Ruta para la página principal que sirve un archivo estático HTML
+// Ruta para la página principal
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-// Configuración del puerto de escucha, utilizando el puerto especificado en la variable de entorno PORT o el puerto 3000 por defecto
+// Configuración del puerto de escucha
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Servidor escuchando en el puerto http://localhost:${PORT}`);

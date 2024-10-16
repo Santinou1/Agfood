@@ -32,44 +32,17 @@ const guardarPedido = (req, res) => {
 };
 
 // Función para obtener pedidos por una fecha específica y renderizarlos
-const obtenerPedidosPorFecha = (req, res) => {
-    const fecha = req.params.fecha;
-    const fechaInicio = moment(fecha, "YYYY-MM-DD").startOf("day").toDate(); // Obtener fecha de inicio del día
-    const fechaFin = moment(fecha, "YYYY-MM-DD").endOf("day").toDate(); // Obtener fecha de fin del día
-
-    // Buscar pedidos en el rango de fechas especificado
-    Pedido.find({
-        fecha: {
-            $gte: fechaInicio, // Mayor o igual que fechaInicio
-            $lte: fechaFin, // Menor o igual que fechaFin
-        },
-    })
-    .then((pedidos) => {
-        // Filtrar y formatear los pedidos para mostrar en la vista
-        const pedidosFiltrados = pedidos.map((pedido) => ({
-            nombre: pedido.nombre,
-            comida: [
-                pedido.menuDelDia,
-                pedido.empanadas,
-                pedido.tartas,
-                pedido.pastasCocidas,
-                pedido.ravioles,
-                pedido.salsas,
-                pedido.ensalada
-            ].filter((comida) => comida), // Filtrar comidas vacías
-        }));
-        
-        // Renderizar la vista 'pedidosPorFecha' con los datos filtrados y la fecha
-        res.render("pedidosPorFecha", {
-            pedidos: pedidosFiltrados,
-            fecha: fecha,
-        });
-    })
-    .catch((error) => {
-        console.error("Error al obtener los pedidos:", error);
-        res.status(500).send("Error al obtener los pedidos"); // Enviar respuesta de error
-    });
-};
+    const obtenerPedidosPorFecha = (req, res) => {
+        const fecha = req.query.fecha; // Obtener la fecha de la consulta
+        Pedido.find({ 
+            fecha: { 
+                $gte: new Date(fecha), 
+                $lt: new Date(new Date(fecha).setDate(new Date(fecha).getDate() + 1)) 
+            } 
+        }) // Buscar pedidos en la fecha especificada
+        .then(pedidos => res.render('pedidosPorFecha', { pedidos, fecha })) // Renderizar la vista con los pedidos
+        .catch(err => res.status(500).send('Error al obtener los pedidos: ' + err)); // Manejar errores
+    };
 
 // Función para exportar pedidos a Excel para una fecha específica
 const exportarPedidosExcel = (req, res) => {
