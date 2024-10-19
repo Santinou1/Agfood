@@ -5,6 +5,8 @@ const connectDB = require('./src/db');
 const menuRoutes = require('./src/routes/menuRoutes');
 const pedidoRoutes = require('./src/routes/pedidoRoutes');
 const adminRoutes = require('./src/routes/adminRoutes'); // Importar las rutas de admin
+const usuarioRoutes = require('./src/routes/usuarioRoutes'); // Importar las rutas de usuario
+
 
 const app = express();
 
@@ -33,11 +35,21 @@ app.use(session({
 app.use('/api/menu', menuRoutes);
 app.use('/api/pedidos', pedidoRoutes);
 app.use('/admin', adminRoutes); // Usar las rutas de admin
+app.use('/api/usuarios', usuarioRoutes); // Agregar las rutas de usuario
+
+
 
 // Ruta para la página principal
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
+
+app.get('/admin/usuarios', (req, res) => {
+    res.redirect('/admin/usuarios/listar'); // Redirigir a la ruta de listar usuarios
+});
+
+
+
 
 // Configuración del puerto de escucha
 const PORT = process.env.PORT || 3000;
