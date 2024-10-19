@@ -33,13 +33,19 @@ const guardarPedido = (req, res) => {
 
 // Función para obtener pedidos por una fecha específica y renderizarlos
     const obtenerPedidosPorFecha = (req, res) => {
-        const fecha = req.query.fecha; // Obtener la fecha de la consulta
-        Pedido.find({ 
-            fecha: { 
-                $gte: new Date(fecha), 
-                $lt: new Date(new Date(fecha).setDate(new Date(fecha).getDate() + 1)) 
-            } 
-        }) // Buscar pedidos en la fecha especificada
+        const fecha = req.query.fecha; // Obtener la fecha de los parámetros de la solicitud (ahora desde query)
+        
+        // Validar la fecha
+        if (!fecha || isNaN(new Date(fecha).getTime())) {
+            return res.status(400).send('Fecha inválida'); // Manejo de errores si la fecha es inválida
+        }
+        
+        Pedido.find({
+            fecha: {
+                $gte: new Date(fecha), // Fecha mayor o igual
+                $lt: new Date(new Date(fecha).setDate(new Date(fecha).getDate() + 1)) // Fecha menor a mañana
+            }
+        })
         .then(pedidos => res.render('pedidosPorFecha', { pedidos, fecha })) // Renderizar la vista con los pedidos
         .catch(err => res.status(500).send('Error al obtener los pedidos: ' + err)); // Manejar errores
     };

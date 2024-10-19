@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const usuarioController = require('../controllers/usuarioController'); // Importar el controlador de usuarios
+const authMiddleware = require('../middleware/authMiddleware'); // Importar el middleware de autenticación
+
 
 // Ruta para crear un nuevo usuario (POST)
 router.post('/crear', usuarioController.crearUsuario);
