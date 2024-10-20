@@ -7,9 +7,6 @@ const authMiddleware = require('../middleware/authMiddleware'); // Importar el m
 // Renderizar la vista de inicio de sesión
 router.get('/login', adminController.showLogin);
 
-// Manejar el inicio de sesión
-router.post('/login', adminController.login);
-
 // Ruta para el panel de administración, con middleware de autenticación
 router.get('/', authMiddleware, adminController.adminPanel);
 

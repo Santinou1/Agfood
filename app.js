@@ -6,6 +6,7 @@ const menuRoutes = require('./src/routes/menuRoutes');
 const pedidoRoutes = require('./src/routes/pedidoRoutes');
 const adminRoutes = require('./src/routes/adminRoutes'); // Importar las rutas de admin
 const usuarioRoutes = require('./src/routes/usuarioRoutes'); // Importar las rutas de usuario
+const sessionRoutes = require("./src/routes/sessionRoutes")
 const authMiddleware = require('./src/middleware/authMiddleware'); // Importar el middleware de autenticación
 const methodOverride = require('method-override');
 
@@ -42,6 +43,7 @@ app.use('/api/menu', menuRoutes);
 app.use('/api/pedidos', pedidoRoutes);
 app.use('/admin', adminRoutes); // Usar las rutas de admin
 app.use('/api/usuarios', usuarioRoutes); // Agregar las rutas de usuario
+app.use('/api', sessionRoutes); // Agregar las rutas de usuario
 
 
 app.get('/pedido', authMiddleware, (req, res) => {

@@ -1,3 +1,4 @@
+/* Estilo general del cuerpo */
 body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
@@ -6,22 +7,22 @@ body {
     text-align: center;
 }
 
-
+/* Contenedor principal */
 .container {
     max-width: 500px;
     width: 100%;
-    height: auto;
     background-color: white;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    flex-direction: column;
     margin: 15px auto;
-    padding-bottom: 19px;
+    padding: 19px 0 15px; /* Top y Bottom padding */
     border-radius: 15px;
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
 }
 
+/* Estilos para grupos de formulario */
 .form-group {
     margin-bottom: 15px;
 }
@@ -31,6 +32,7 @@ label {
     margin-bottom: 5px;
 }
 
+/* Estilos comunes para inputs y selects */
 select, input {
     width: 100%;
     padding: 8px;
@@ -38,6 +40,7 @@ select, input {
     box-sizing: border-box;
 }
 
+/* Botón principal */
 button {
     padding: 10px 15px;
     background-color: #28a745;
@@ -47,35 +50,41 @@ button {
     width: 100%;
     border-radius: 10px;
     margin-top: 10px;
+    transition: background-color 0.3s;
 }
 
+button:hover {
+    background-color: #218838; /* Color más oscuro para el hover */
+}
+
+/* Listas y botones adicionales */
 ul {
     list-style: none;
-    padding-left: 0;
-    margin-left: 0;
+    padding: 0;
+    margin: 0;
 }
 
 #resetForm {
     display: none;
     margin-top: 10px;
     background-color: #d91600;
-    width: 100%;    
+    width: 100%;
 }
-    
-.empanada-group{
-    display:flex;
+
+/* Estilos específicos para empanadas */
+.empanada-group {
+    display: flex;
     align-items: center;
     margin: 20px;
 }
 
 .empanada-label {
-    margin-bottom: 10px; /* Espacio debajo de la etiqueta */
+    margin-bottom: 10px;
     font-weight: bold;
 }
 
-/* Estilo de los checkboxes */
 .empanada-checkbox {
-    margin-bottom: 5px; /* Espacio entre los checkboxes */
+    margin-bottom: 5px;
 }
 
 .empanada-checkbox.disabled {
@@ -83,76 +92,32 @@ ul {
     cursor: not-allowed;
 }
 
+/* Contenedor de ingredientes */
 #ingredientsContainer {
     display: flex;
-    flex-wrap: wrap; /* Permitir que los elementos se ajusten en varias filas */
-    gap: 40px; /* Espacio entre los ingredientes */
+    flex-wrap: wrap;
+    gap: 40px;
 }
 
-
+/* Estilo del botón de admin */
 .admin-button {
     display: inline-block;
     padding: 10px 20px;
-    background-color: #007BFF; /* Color de fondo azul */
-    color: white; /* Color del texto */
-    text-decoration: none; /* Sin subrayado */
-    border-radius: 5px; /* Bordes redondeados */
-    margin-top: 20px; /* Espacio arriba */
+    background-color: #007BFF;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 20px;
+    transition: background-color 0.3s;
 }
 
 .admin-button:hover {
-    background-color: #0056b3; /* Color más oscuro al pasar el ratón */
+    background-color: #0056b3;
 }
-
-
 
 /* Estilo del encabezado */
-h1 {
+h1, h2 {
     text-align: center;
-    color: #333;
-}
-
-/* Estilo de la tabla */
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 20px 0;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-/* Estilo de las celdas de la tabla */
-th, td {
-    padding: 12px 15px;
-    text-align: left;
-    border: 1px solid #ddd;
-}
-
-/* Estilo de los encabezados de la tabla */
-th {
-    background-color: #007BFF; /* Color de fondo azul */
-    color: #fff; /* Color de texto blanco */
-}
-
-/* Estilo para filas alternas */
-tbody tr:nth-child(even) {
-    background-color: #f9f9f9; /* Color de fondo gris claro */
-}
-
-/* Estilo para filas en hover */
-tbody tr:hover {
-    background-color: #f1f1f1; /* Color de fondo gris más oscuro */
-}
-
-/* Estilo de mensaje si no hay pedidos */
-td[colspan="9"] {
-    text-align: center;
-    color: #666; /* Color de texto gris */
-    font-style: italic; /* Cursiva */
-}
-
-
-
-h1 {
     color: #333;
 }
 
@@ -160,6 +125,43 @@ h2 {
     color: #555;
 }
 
+/* Estilos para tablas */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+th, td {
+    padding: 10px 15px; /* Usamos un padding consistente */
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+/* Estilos para encabezados de tabla */
+th {
+    background-color: #007BFF;
+    color: #fff;
+}
+
+/* Estilo para filas alternas y hover */
+tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Estilo de mensaje si no hay pedidos */
+td[colspan="9"] {
+    text-align: center;
+    color: #666;
+    font-style: italic;
+}
+
+/* Botones en contenedor */
 .button-container {
     margin: 20px 0;
 }
@@ -179,6 +181,7 @@ h2 {
     background-color: #0056b3;
 }
 
+/* Estilos de enlaces */
 a {
     display: block;
     margin-top: 20px;
@@ -189,27 +192,3 @@ a {
 a:hover {
     text-decoration: underline;
 }
-
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-th, td {
-    padding: 10px;
-    text-align: left;
-}
-
-button, a {
-    margin: 5px;
-    padding: 5px 10px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    text-decoration: none;
-}
-
-button:hover, a:hover {
-    background-color: #45a049;
-}   

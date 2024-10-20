@@ -10,7 +10,7 @@ const showLogin = (req, res) => {
     res.render('adminLogin'); // Renderiza la vista de inicio de sesión
 };
 
-// Función para manejar el inicio de sesión
+/* // Función para manejar el inicio de sesión
 const login = (req, res) => {
     const { email, password } = req.body;
 
@@ -46,11 +46,10 @@ const login = (req, res) => {
             console.error(err); // Log del error
             return res.status(500).send('Error al intentar iniciar sesión.'); // Manejar error en la consulta
         });
-};
+}; */
 
 // Exportar las funciones utilizando module.exports
 module.exports = {
     adminPanel,
-    showLogin,
-    login
+    showLogin
 };

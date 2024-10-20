@@ -46,30 +46,37 @@ const listarUsuarios = (req, res) => {
 
 // Controlador para actualizar un usuario
 const actualizarUsuario = (req, res) => {
-  const { id } = req.params; // Obtener el ID del usuario desde los parámetros
-  const { nombre, apellido, mail, rol, contraseña } = req.body; // Obtener los datos del cuerpo de la solicitud
+  const { id } = req.params;
+  const { nombre, apellido, mail, rol, contraseña } = req.body;
 
-  // Buscar al usuario por su ID
-  Usuario.findById(id).then((usuario) => {
-    if (!usuario) {
-      return res.status(404).send("Usuario no encontrado.");
-    }
+  Usuario.findById(id)
+      .then(usuario => {
+          if (!usuario) {
+              return res.status(404).send('Usuario no encontrado.');
+          }
 
-    // Actualizar solo los campos que se envían
-    if (nombre) usuario.nombre = nombre;
-    if (apellido) usuario.apellido = apellido;
-    if (mail) usuario.mail = mail;
-    if (rol) usuario.rol = rol;
-    if (contraseña) usuario.contraseña = contraseña;
+          if (nombre) usuario.nombre = nombre;
+          if (apellido) usuario.apellido = apellido;
+          if (mail) usuario.mail = mail;
+          if (rol) usuario.rol = rol;
+          if (contraseña) usuario.contraseña = contraseña;
 
-    usuario
-      .save()
-      .then(() => res.redirect("/api/usuarios/listar")) // Redireccionar después de actualizar
-      .catch((err) =>
-        res.status(500).send("Error al actualizar el usuario: " + err)
-      );  
-  });
+          return usuario.save()
+              .then(() => {
+                  console.log('Usuario actualizado correctamente.');
+                  res.redirect("/api/usuarios/listar")
+              })
+              .catch(err => {
+                  console.error('Error al actualizar el usuario:', err);
+                  res.status(500).send('Error al actualizar el usuario: ' + err);
+              });
+      })
+      .catch(err => {
+          console.error('Error al buscar el usuario:', err);
+          res.status(500).send('Error al buscar el usuario: ' + err);
+      });
 };
+
 
 // Renderizar formulario para actualizar usuario
 function renderizarActualizarUsuario(req, res) {
