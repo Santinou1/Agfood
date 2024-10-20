@@ -16,7 +16,30 @@ const login = (req, res) => {
       if (usuario.activo === false) {
         return res
           .status(403)
-          .send("Acceso denegado. Tu cuenta está deshabilitada."); // Manejar estado falso
+          .send(`
+            <h2>Acceso denegado</h2>
+            <p>Tu cuenta está deshabilitada.</p>
+            <button onclick="window.location.href='/'">Volver a Iniciar Sesión</button>
+            <style>
+                body {
+                    font-family: Arial, sans-serif;
+                    text-align: center;
+                    margin-top: 50px;
+                }
+                button {
+                    padding: 10px 15px;
+                    background-color: #007BFF;
+                    color: white;
+                    border: none;
+                    cursor: pointer;
+                    border-radius: 5px;
+                    margin-top: 20px;
+                }
+                button:hover {
+                    background-color: #0056b3;
+                }
+            </style>
+        `);
       }
 
       // Comparar la contraseña

@@ -22,11 +22,11 @@ const authMiddleware = (req, res, next) => {
             })
             .catch(err => {
                 console.error(err); // Log del error
-                return res.redirect('/api/login'); // Manejar error en la consulta
+                return res.redirect('/'); // Manejar error en la consulta
             });
     } else {
         // Si el usuario no está autenticado, redirigir a la página de inicio de sesión
-        return res.redirect('/api/login');
+        return res.redirect('/');
     }
 };
 
