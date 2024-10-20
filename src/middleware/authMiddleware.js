@@ -8,7 +8,7 @@ const authMiddleware = (req, res, next) => {
         Usuario.findOne({ mail: req.session.user })
             .then(usuario => {
                 if (!usuario) {
-                    return res.redirect('/admin/login'); // Si el usuario no existe, redirigir a login
+                    return res.redirect('/api/login'); // Si el usuario no existe, redirigir a login
                 }
 
                 // Verificar el rol del usuario
@@ -22,11 +22,11 @@ const authMiddleware = (req, res, next) => {
             })
             .catch(err => {
                 console.error(err); // Log del error
-                return res.redirect('/admin/login'); // Manejar error en la consulta
+                return res.redirect('/api/login'); // Manejar error en la consulta
             });
     } else {
         // Si el usuario no está autenticado, redirigir a la página de inicio de sesión
-        return res.redirect('/admin/login');
+        return res.redirect('/api/login');
     }
 };
 

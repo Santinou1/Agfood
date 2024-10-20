@@ -38,7 +38,6 @@ function crearUsuario(req, res) {
 const listarUsuarios = (req, res) => {
   Usuario.find()
     .then((usuarios) => {
-      console.log(usuarios);
       res.render("listarUsuarios", { usuarios }); // Enviamos el array 'usuarios' a la plantilla
     })
     .catch((err) => res.status(500).send("Error al obtener los usuarios"));
