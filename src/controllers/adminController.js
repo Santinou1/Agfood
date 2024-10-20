@@ -27,12 +27,18 @@ const login = (req, res) => {
                     return res.send('Credenciales incorrectas. <a href="/admin/login">Intenta de nuevo</a>');
                 }
 
-                // Verificar el rol del usuario
+                // Guardar el email y rol del usuario en la sesión
+                req.session.user = { email, rol: usuario.rol }; 
+
+                // Redirigir según el rol del usuario
                 if (usuario.rol === 'admin') {
-                    req.session.user = email; // Guardar el email del usuario en la sesión
+                    req.session.user = email; // Aquí debería ser solo el email
                     return res.redirect('/admin'); // Redirigir al panel de administración
-                } else {
-                    return res.send('No tienes permisos para acceder al panel de administración.'); // Manejar acceso no permitido
+                } else if (usuario.rol === "usuario") {
+                    req.session.user = email; // Aquí también debería ser solo el email
+                    return res.redirect('/pedido'); // Redirigir al formulario de pedido
+                }else {
+                    return res.status(403).send('Rol de usuario no reconocido.'); // Manejar rol no reconocido
                 }
             });
         })

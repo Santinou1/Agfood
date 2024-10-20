@@ -7,10 +7,17 @@ const authMiddleware = (req, res, next) => {
         // Buscar al usuario en la base de datos
         Usuario.findOne({ mail: req.session.user })
             .then(usuario => {
-                if (usuario && usuario.rol === 'admin') {
+                if (!usuario) {
+                    return res.redirect('/admin/login'); // Si el usuario no existe, redirigir a login
+                }
+
+                // Verificar el rol del usuario
+                if (usuario.rol === 'admin') {
                     return next(); // Si el usuario es admin, continuar
+                } else if (usuario.rol === "usuario") {
+                    return next(); // Si es usuario, también permitir el acceso (puedes cambiar esto si es necesario)
                 } else {
-                    return res.redirect('/admin/login'); // Si no es admin, redirigir a login
+                    return res.status(403).send('Rol de usuario no reconocido.'); // Manejar rol no reconocido
                 }
             })
             .catch(err => {

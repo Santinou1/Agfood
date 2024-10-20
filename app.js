@@ -6,6 +6,7 @@ const menuRoutes = require('./src/routes/menuRoutes');
 const pedidoRoutes = require('./src/routes/pedidoRoutes');
 const adminRoutes = require('./src/routes/adminRoutes'); // Importar las rutas de admin
 const usuarioRoutes = require('./src/routes/usuarioRoutes'); // Importar las rutas de usuario
+const authMiddleware = require('./src/middleware/authMiddleware'); // Importar el middleware de autenticación
 
 
 const app = express();
@@ -38,15 +39,15 @@ app.use('/admin', adminRoutes); // Usar las rutas de admin
 app.use('/api/usuarios', usuarioRoutes); // Agregar las rutas de usuario
 
 
-
-// Ruta para la página principal
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+app.get('/pedido', authMiddleware, (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'formularioDePedido.html'));
 });
 
-app.get('/admin/usuarios', (req, res) => {
+
+
+/* app.get('/admin/usuarios', (req, res) => {
     res.redirect('/admin/usuarios/listar'); // Redirigir a la ruta de listar usuarios
-});
+}); */
 
 
 
