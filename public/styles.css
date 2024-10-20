@@ -189,3 +189,27 @@ a {
 a:hover {
     text-decoration: underline;
 }
+
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+}
+
+button, a {
+    margin: 5px;
+    padding: 5px 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    text-decoration: none;
+}
+
+button:hover, a:hover {
+    background-color: #45a049;
+}   

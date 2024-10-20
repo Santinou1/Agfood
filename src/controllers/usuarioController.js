@@ -26,7 +26,7 @@ function crearUsuario(req, res) {
       // Guardar el nuevo usuario en la base de datos
       nuevoUsuario
         .save()
-        .then(() => res.status(201).json({ mensaje: 'Usuario creado correctamente', usuario: nuevoUsuario }))
+        .then(() => res.redirect("/api/usuarios/listar")) // Redirige al listado de usuarios
         .catch((err) =>
           res.status(500).send("Error al crear el usuario: " + err)
         );
@@ -35,32 +35,19 @@ function crearUsuario(req, res) {
 }
 
 // Listar todos los usuarios
-function listarUsuarios(req, res) {
+const listarUsuarios = (req, res) => {
   Usuario.find()
-    .then((usuarios) => res.json(usuarios))
-    .catch((err) => res.status(500).send("Error al listar usuarios: " + err));
-}
-
-// Deshabilitar un usuario (cambiar su rol o estado)
-function deshabilitarUsuario(req, res) {
-  const { id } = req.params;
-
-  Usuario.findByIdAndUpdate(id, { rol: "deshabilitado" }, { new: true })
-    .then((usuarioActualizado) => {
-      if (!usuarioActualizado) {
-        return res.status(404).send("Usuario no encontrado.");
-      }
-      res.send("Usuario deshabilitado exitosamente.");
+    .then((usuarios) => {
+      console.log(usuarios);
+      res.render("listarUsuarios", { usuarios }); // Enviamos el array 'usuarios' a la plantilla
     })
-    .catch((err) =>
-      res.status(500).send("Error al deshabilitar usuario: " + err)
-    );
-}
+    .catch((err) => res.status(500).send("Error al obtener los usuarios"));
+};
 
-// Actualizar email y/o contraseña
+// Actualizar email, contraseña, nombre, apellido y rol
 function actualizarUsuario(req, res) {
   const { id } = req.params;
-  const { mail, contraseña } = req.body;
+  const { mail, password, nombre, apellido, rol } = req.body;
 
   Usuario.findById(id)
     .then((usuario) => {
@@ -68,73 +55,120 @@ function actualizarUsuario(req, res) {
         return res.status(404).send("Usuario no encontrado.");
       }
 
-      // Actualizar correo electrónico si se proporciona
+      // Actualizar campos solo si se proporcionan
       if (mail) {
         usuario.mail = mail;
       }
+      if (nombre) {
+        usuario.nombre = nombre;
+      }
+      if (apellido) {
+        usuario.apellido = apellido;
+      }
+      if (rol) {
+        usuario.rol = rol;
+      }
 
-      // Actualizar contraseña si se proporciona
-      if (contraseña) {
-        bcrypt
+      // Si se proporciona una nueva contraseña, encriptarla y actualizarla
+      if (password) {
+        return bcrypt
           .genSalt(10)
-          .then((salt) => bcrypt.hash(contraseña, salt))
+          .then((salt) => bcrypt.hash(password, salt))
           .then((hash) => {
             usuario.contraseña = hash;
             return usuario.save();
           })
-          .then(() => res.send("Usuario actualizado exitosamente."))
-          .catch((err) =>
-            res.status(500).send("Error al actualizar contraseña: " + err)
-          );
-      } else {
-        // Si no se actualiza la contraseña, solo se guarda el usuario
-        usuario
-          .save()
-          .then(() => res.send("Usuario actualizado exitosamente."))
+          .then(() => res.redirect("/api/usuarios/listar"))
           .catch((err) =>
             res.status(500).send("Error al actualizar usuario: " + err)
           );
       }
+
+      // Si no se actualiza la contraseña, solo guardar los otros campos
+      return usuario
+        .save()
+        .then(() => res.redirect("/api/usuarios/listar"))
+        .catch((err) =>
+          res.status(500).send("Error al actualizar usuario: " + err)
+        );
     })
     .catch((err) => res.status(500).send("Error al buscar usuario: " + err));
 }
 
+// Renderizar formulario para actualizar usuario
+function renderizarActualizarUsuario(req, res) {
+  const { id } = req.params; // Obtener ID del usuario de los parámetros
+
+  Usuario.findById(id) // Buscar usuario por ID
+    .then((usuario) => {
+      if (!usuario) {
+        return res.status(404).send("Usuario no encontrado."); // Manejo de error si el usuario no existe
+      }
+
+      res.render("actualizarUsuario", { usuario }); // Renderizar vista con datos del usuario
+    })
+    .catch((err) => {
+      res.status(500).send("Error al buscar usuario: " + err); // Manejo de error
+    });
+}
+
 // Función para eliminar un usuario por ID
 const eliminarUsuario = (req, res) => {
-    const { id } = req.params;
-    Usuario.findByIdAndDelete(id)
-        .then(usuarioEliminado => {
-            if (!usuarioEliminado) {
-                return res.status(404).json({ mensaje: 'Usuario no encontrado' });
-            }
-            res.status(200).json({ mensaje: 'Usuario eliminado correctamente', usuario: usuarioEliminado });
-        })
-        .catch(err => res.status(500).json({ mensaje: 'Error al eliminar el usuario', error: err }));
+  const { id } = req.params;
+  console.log("Método:", req.method); // Imprime el método HTTP (debería ser DELETE)
+  console.log("ID del usuario:", req.params.id); // Imprime el ID del usuario que estás tratando de eliminar
+
+  Usuario.findByIdAndDelete(id)
+    .then((usuarioEliminado) => {
+      if (!usuarioEliminado) {
+        return res.status(404).json({ mensaje: "Usuario no encontrado" });
+      }
+      res.status(200).json({
+        mensaje: "Usuario eliminado correctamente",
+        usuario: usuarioEliminado,
+      });
+    })
+    .catch((err) =>
+      res
+        .status(500)
+        .json({ mensaje: "Error al eliminar el usuario", error: err })
+    );
 };
 
-// Función para rehabilitar un usuario (cambiar su rol a 'usuario')
-const rehabilitarUsuario = (req, res) => {
+// Función para alternar el estado de un usuario (habilitar/deshabilitar)
+const alternarEstadoUsuario = (req, res) => {
   const { id } = req.params; // Obtener el ID del usuario de los parámetros
 
-  // Actualizar el rol del usuario a 'usuario'
-  return Usuario.findByIdAndUpdate(id, { rol: 'usuario' }, { new: true })
-      .then(usuario => {
-          if (!usuario) {
-              return res.status(404).json({ mensaje: 'Usuario no encontrado' }); // Manejo de error si el usuario no existe
-          }
-          res.json({ mensaje: 'Usuario rehabilitado', usuario }); // Responder con el usuario actualizado
-      })
-      .catch(err => {
-          res.status(500).json({ mensaje: 'Error al rehabilitar el usuario', error: err }); // Manejo de error
-      });
+  // Buscar el usuario por ID
+  Usuario.findById(id)
+    .then((usuario) => {
+      if (!usuario) {
+        return res.status(404).json({ mensaje: "Usuario no encontrado" }); // Manejo de error si el usuario no existe
+      }
+
+      // Alternar el estado del usuario
+      usuario.activo = !usuario.activo; // Cambiar el estado a su opuesto
+
+      // Guardar el usuario actualizado
+      return usuario.save();
+    })
+    .then(() => {
+      res.redirect("/api/usuarios/listar");
+    })
+    .catch((err) => {
+      res.status(500).json({
+        mensaje: "Error al alternar el estado del usuario",
+        error: err,
+      }); // Manejo de error
+    });
 };
 
 // Exportar las funciones utilizando module.exports
 module.exports = {
   crearUsuario,
   listarUsuarios,
-  deshabilitarUsuario,
   actualizarUsuario,
   eliminarUsuario,
-  rehabilitarUsuario,
+  alternarEstadoUsuario,
+  renderizarActualizarUsuario,
 };

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listado de Usuarios</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <h2>Listado de Usuarios</h2>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Email</th>
+                <th>Rol</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% usuarios.forEach(usuario => { %>
+            <tr>
+                <td><%= usuario.nombre %></td>
+                <td><%= usuario.apellido %></td>
+                <td><%= usuario.mail %></td>
+                <td><%= usuario.rol %></td>
+                <td><%= usuario.activo ? 'Activo' : 'Deshabilitado' %></td>
+                <td>
+                    <form method="POST" action="/api/usuarios/alternar/<%= usuario._id %>" style="display:inline;">
+                        <button type="submit"><%= usuario.activo ? 'Deshabilitar' : 'Habilitar' %></button>
+                    </form>
+                    <a href="/api/usuarios/actualizar/<%= usuario._id %>">Editar</a>
+                </td>
+            </tr>
+            <% }); %>
+        </tbody>
+    </table>
+
+    <a href="/api/usuarios/crear">Crear nuevo usuario</a>
+</body>
+</html>

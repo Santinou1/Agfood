@@ -7,6 +7,8 @@ const pedidoRoutes = require('./src/routes/pedidoRoutes');
 const adminRoutes = require('./src/routes/adminRoutes'); // Importar las rutas de admin
 const usuarioRoutes = require('./src/routes/usuarioRoutes'); // Importar las rutas de usuario
 const authMiddleware = require('./src/middleware/authMiddleware'); // Importar el middleware de autenticación
+const methodOverride = require('method-override');
+
 
 
 const app = express();
@@ -24,6 +26,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Middleware para procesar body como JSON y formularios
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Permitir usar métodos PUT, PATCH y DELETE en formularios HTML
+app.use(methodOverride('_method'));
 
 // Configurar sesiones
 app.use(session({

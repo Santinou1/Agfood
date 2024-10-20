@@ -7,7 +7,8 @@ const usuarioSchema = new mongoose.Schema({
     apellido: { type: String, required: true },
     mail: { type: String, required: true, unique: true },
     contraseña: { type: String, required: true },
-    rol: { type: String, enum: ['admin', 'usuario'], default: 'usuario' } // El rol puede ser 'admin' o 'usuario'
+    rol: { type: String, enum: ['admin', 'usuario'], default: 'usuario' }, // El rol puede ser 'admin' o 'usuario'
+    activo: { type: Boolean, default: true } // Usar true sin comillas
 });
 
 // Middleware para encriptar la contraseña antes de guardarla (con promesas)
