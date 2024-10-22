@@ -7,13 +7,15 @@
     <link rel="stylesheet" href="/styles.css"> <!-- Asegúrate de que la ruta al CSS sea correcta -->
 </head>
 <body>
+    <%- include('./partial/header.ejs') %> <!-- Incluir el logo aquí -->
+
     <h1>Buscar Pedidos por Fecha</h1>
     <form action="/admin/pedidos/porFecha" method="get">
         <input type="date" name="fecha" required>
         <button type="submit">Buscar</button>
     </form>
-    <a href="/api/logout">Cerrar Sesión</a>
-    <a href="/admin">Panel Admin</a>
+    <a href="/admin" class="admin-button">Volver al panel de Administracion</a> 
+    <a href="/api/logout" class="cerrarSesion">Cerrar Sesión</a>
 
 </body>
 </html>

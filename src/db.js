@@ -1,8 +1,9 @@
 const mongoose = require('mongoose');
+require('dotenv').config()
 
 // Función para conectar a la base de datos MongoDB
 const connectDB = () => {
-    return mongoose.connect('mongodb+srv://santitech:za4YK1cidi7zoZ01@food-test.8ebskof.mongodb.net/?retryWrites=true&w=majority&appName=food-test')
+    return mongoose.connect(process.env.URL_MONGO)
         .then(() => {
             console.log('MongoDB connected'); // Mensaje de éxito al conectar
         })

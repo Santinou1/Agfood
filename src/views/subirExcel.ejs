@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Subir Excel</title>
+    <link rel="stylesheet" href="/styles.css" />
+    <!-- Asegúrate de que la ruta al CSS sea correcta -->
+</head>
+<body>
+
+    <%- include('./partial/header.ejs') %> <!-- Incluir el logo aquí -->
+
+    <h1>Subir Archivo Excel</h1>
+    
+    <form action="/admin/cargar-excel" method="POST" enctype="multipart/form-data">
+        <label for="archivoExcel">Selecciona el archivo Excel:</label>
+        <input type="file" name="archivoExcel" id="archivoExcel" required>
+        <button type="submit">Cargar y Actualizar</button>
+    </form>
+
+    <a href="/admin" class="admin-button">Volver al panel de Administracion</a>
+    <a href="/api/logout" class="cerrarSesion">Cerrar Sesión</a>
+
+
+</body>
+</html>

@@ -1,26 +1,60 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Panel de Administración</title>
     <link rel="stylesheet" href="/styles.css" />
-    <!-- Asegúrate de que la ruta al CSS sea correcta -->
-  </head>
-  <body>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Obtener la fecha actual
+            const today = new Date();
+            const yyyy = today.getFullYear();
+            const mm = String(today.getMonth() + 1).padStart(2, '0'); // Meses desde 0
+            const dd = String(today.getDate()).padStart(2, '0'); // Días
+
+            // Formatear la fecha como 'yyyy-mm-dd'
+            const todayFormatted = `${yyyy}-${mm}-${dd}`;
+
+            // Completar el campo de fecha en el formulario
+            const fechaInput = document.getElementById('fechaInput');
+            fechaInput.value = todayFormatted; // Asignar la fecha formateada al campo
+
+            // Obtener la URL actual
+            const urlParams = new URLSearchParams(window.location.search);
+            const fechaQuery = urlParams.get('fecha'); // Obtener la fecha del query parameter
+
+            if (fechaQuery) {
+                // Modificar el action del formulario con la fecha obtenida
+                const form = document.getElementById('sendMailForm');
+                form.action = `/api/pedidos/enviarMail?fecha=${fechaQuery}`; // Establecer la acción con la fecha
+            } else {
+                // Si no hay fecha en la URL, usar la fecha de hoy
+                const form = document.getElementById('sendMailForm');
+                form.action = `/api/pedidos/enviarMail?fecha=${todayFormatted}`; // Establecer la acción con la fecha de hoy
+            }
+        });
+    </script></head>
+<body>
+    <%- include('./partial/header.ejs') %> <!-- Incluir el logo aquí -->
+
     <h1>Bienvenido al Panel de Administración</h1>
 
     <h2>Panel de Administrador</h2>
 
     <div class="button-container">
-      <a href="/pedido" class="button">Hacer un pedido</a>
-      <a href="/api/usuarios/listar" class="button">ABM</a>
-      <a href="/api/pedidos/buscar" class="button">Buscar Pedidos</a>
-      <!-- Cambia esta línea -->
+        <a href="/pedido" class="button">Hacer un pedido</a>
+        <a href="/api/usuarios/listar" class="button">ABM</a>
+        <a href="/api/pedidos/buscar" class="button">Buscar Pedidos</a>
+        <a href="/admin/subir-excel" class="button">Subir Excel</a> <!-- Nuevo botón -->
+        <form id="sendMailForm" action="/api/pedidos/enviarMail" method="GET">
+            <input type="hidden" id="fechaInput" name="fecha"> <!-- Campo oculto para la fecha -->
+            <button type="submit">Enviar Mail</button>
+        </form>        
     </div>
 
-    <a href="/api/logout">Cerrar Sesión</a>
+    <a href="/api/logout" class="cerrarSesion">Cerrar Sesión</a>
 
     <style></style>
-  </body>
+</body>
 </html>

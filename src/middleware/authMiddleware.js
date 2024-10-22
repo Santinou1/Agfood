@@ -8,7 +8,7 @@ const authMiddleware = (req, res, next) => {
         Usuario.findOne({ mail: req.session.user })
             .then(usuario => {
                 if (!usuario) {
-                    return res.redirect('/api/login'); // Si el usuario no existe, redirigir a login
+                    return res.redirect('/'); // Si el usuario no existe, redirigir a login
                 }
 
                 // Verificar el rol del usuario

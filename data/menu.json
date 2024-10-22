@@ -1,11 +1,10 @@
 {
   "menuDelDia": [
-    "Milanesa con ensalada",
-    "Milanesa a la fugazetta con puré",
-    "Omelette de espinaca con calabaza, queso y ensalada",
-    "Salteado al wok con fideos y vegetales",
-    "Sandwich de milanesa, lechuga y tomate",
-    "Ravioles Caseros con Salsa Scarparo"
+    "Pata y muslo con ensalada",
+    "Pechuga grille gratinada con puré de papas",
+    "Canelones mixtos con crema de espinaca",
+    "Sandwich de milanesa con lechuga y tomate",
+    "Sorrentinos con crema de Roquefort y jamón"
   ],
   "empanadas": [
     "Pollo",
@@ -21,12 +20,12 @@
   "tartas": [
     "Jamón y queso",
     "Cebolla y queso",
-    "Verdura (acelga, huevo, queso y salsa blanca)",
+    "Verdura (acelga, huevo, queso...)",
     "Pollo",
     "Calabaza y queso mozzarella",
     "Brócoli",
     "Zapallito",
-    "Pollo y champiñones (consultar)",
+    "Pollo y champiñones",
     "Capresse (tomate, queso y albahaca)",
     "Atún (consultar)"
   ],
@@ -35,33 +34,37 @@
     "Fideos cintas de espinaca",
     "Fucciles",
     "Ñoquis de papa",
-    "Ñoquis de espinaca o calabaza (consultar)",
-    "Sorrentinos de jamón y queso",
+    "Ñoquis de espinaca",
+    "Sorrentinos de jamón...",
     "Triangulitos de 4 quesos"
   ],
   "ravioles": [
     "Ricota y parmesano",
-    "Napolitanos (espinaca, muzarella y verdeo)",
+    "Napolitanos (espinaca, muzarella...)",
     "Especiales (pollo, verdura y provolone)",
-    "Calabaza (calabaza, queso por salud y verdeo)",
+    "Calabaza (calabaza, queso por salud...)",
     "Caseros (verdura, carne y queso)",
-    "Serranos (espinaca, queso y jamón crudo)",
-    "Munich (ricota, panceta ahumada y verdeo)",
-    "Piamonteses (ricota, queso por salud y jamón cocido)",
+    "Serranos (espinaca, queso y jamón...)",
+    "Munich (ricota, panceta...)",
+    "Piamonteses (ricota, queso...)",
     "Capeletis (consultar)"
   ],
   "salsas": [
     "Bolognesa",
     "Salsa blanca",
     "Fileto",
-    "Mixta (fileto con blanca)",
-    "Rosa (fileto con crema)",
+    "Mixta",
+    "Rosa",
     "Pesto",
     "Crema",
     "Manteca",
-    "Aceite de oliva o de maíz"
+    "Aceite"
   ],
-  "ensaladas": ["Ensalada Grande", "Ensalada Chica", "Ensalada César"],
+  "ensaladas": [
+    "Ensalada Grande",
+    "Ensalada Chica",
+    "Ensalada César"
+  ],
   "ingredientesEnsalada": [
     "Brócoli",
     "Remolacha",
@@ -73,8 +76,8 @@
     "Huevo",
     "Arroz blanco",
     "Arroz integral",
-    "Repollo colorado",
-    "Tomate cortado",
+    "Repollo Colorado",
+    "Tomate Cortado",
     "Tomate Cherry",
     "Apio",
     "Rúcula",

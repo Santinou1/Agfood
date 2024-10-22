@@ -5,6 +5,7 @@ body {
     margin: 0;
     padding: 20px;
     text-align: center;
+    background-image: url('../public/images/logo.png');
 }
 
 /* Contenedor principal */
@@ -17,7 +18,7 @@ body {
     align-items: center;
     justify-content: center;
     margin: 15px auto;
-    padding: 19px 0 15px; /* Top y Bottom padding */
+    padding: 19px 0 15px;
     border-radius: 15px;
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
 }
@@ -38,12 +39,13 @@ select, input {
     padding: 8px;
     border-radius: 10px;
     box-sizing: border-box;
+    border: 1px solid rgba(76, 76, 78, 255); /* Borde gris oscuro */
 }
 
 /* Botón principal */
 button {
     padding: 10px 15px;
-    background-color: #28a745;
+    background-color: rgba(241,102,37,255); /* Naranja de la empresa */
     color: white;
     border: none;
     cursor: pointer;
@@ -54,7 +56,7 @@ button {
 }
 
 button:hover {
-    background-color: #218838; /* Color más oscuro para el hover */
+    background-color: rgba(200,85,32,255); /* Naranja más oscuro para hover */
 }
 
 /* Listas y botones adicionales */
@@ -67,7 +69,7 @@ ul {
 #resetForm {
     display: none;
     margin-top: 10px;
-    background-color: #d91600;
+    background-color: rgba(200, 24, 0, 255); /* Rojo intenso para el botón de reinicio */
     width: 100%;
 }
 
@@ -103,7 +105,7 @@ ul {
 .admin-button {
     display: inline-block;
     padding: 10px 20px;
-    background-color: #007BFF;
+    background-color: rgba(76, 76, 78, 255); /* Gris oscuro */
     color: white;
     text-decoration: none;
     border-radius: 5px;
@@ -112,17 +114,17 @@ ul {
 }
 
 .admin-button:hover {
-    background-color: #0056b3;
+    background-color: rgba(50, 50, 52, 255); /* Gris más oscuro para hover */
 }
 
 /* Estilo del encabezado */
 h1, h2 {
     text-align: center;
-    color: #333;
+    color: rgba(76, 76, 78, 255); /* Gris oscuro */
 }
 
 h2 {
-    color: #555;
+    color: rgba(50, 50, 52, 255); /* Gris más claro */
 }
 
 /* Estilos para tablas */
@@ -134,14 +136,14 @@ table {
 }
 
 th, td {
-    padding: 10px 15px; /* Usamos un padding consistente */
+    padding: 10px 15px;
     text-align: left;
     border: 1px solid #ddd;
 }
 
 /* Estilos para encabezados de tabla */
 th {
-    background-color: #007BFF;
+    background-color: rgba(76, 76, 78, 255); /* Gris oscuro */
     color: #fff;
 }
 
@@ -170,7 +172,7 @@ td[colspan="9"] {
     display: inline-block;
     padding: 10px 20px;
     margin: 5px;
-    background-color: #007BFF;
+    background-color: rgba(76, 76, 78, 255); /* Gris oscuro */
     color: white;
     text-decoration: none;
     border-radius: 5px;
@@ -178,17 +180,56 @@ td[colspan="9"] {
 }
 
 .button:hover {
-    background-color: #0056b3;
+    background-color: rgba(50, 50, 52, 255); /* Gris más oscuro para hover */
 }
 
 /* Estilos de enlaces */
 a {
     display: block;
     margin-top: 20px;
-    color: #007BFF;
+    color: rgba(76, 76, 78, 255); /* Gris oscuro */
     text-decoration: none;
 }
 
 a:hover {
     text-decoration: underline;
+}
+
+/* Botón de sesión */
+.session-button {
+    background: rgba(241,102,37,255); /* Naranja de la empresa */
+    border: 1px solid rgba(241,102,37,255);
+    border-radius: 6px;
+    color: #FFFFFF;
+    cursor: pointer;
+    font-family: nunito,roboto,proxima-nova,"proxima nova",sans-serif;
+    font-size: 16px;
+    font-weight: 800;
+    padding: 12px 14px;
+    text-align: center;
+}
+
+.session-button:hover {
+    background-color: rgba(200,85,32,255); /* Naranja más oscuro */
+    color: rgba(241,102,37,255);
+}
+
+.session-button:active {
+    opacity: 0.5;
+}
+
+/* Estilo del enlace de cerrar sesión */
+.cerrarSesion {
+    color: rgba(200, 24, 0, 255); /* Rojo intenso */
+}
+
+.btn-download{
+    color: rgba(241,102,37,255)
+}
+
+.logo {
+    width: 150px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
 }
