@@ -7,7 +7,7 @@ const adminPanel = (req, res) => {
 
 // Función para renderizar la vista de inicio de sesión
 const showLogin = (req, res) => {
-    res.render('adminLogin'); // Renderiza la vista de inicio de sesión
+    res.render('adminLogins'); // Renderiza la vista de inicio de sesión
 };
 
 /* // Función para manejar el inicio de sesión
