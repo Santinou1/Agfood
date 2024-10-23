@@ -4,13 +4,13 @@ const Menu = require("../models/Menu")
 const path = require("path");
 
 const processExcelUpload = (req, res) => {
-  // Ruta del archivo Excel subido
-  const excelPath = req.file.path;
+  // Obtener el buffer del archivo subido (usando multer en memoria)
+  const excelBuffer = req.file.buffer;
 
-  // Leer el archivo Excel
   return new Promise((resolve, reject) => {
     try {
-      const workbook = xlsx.readFile(excelPath);
+      // Leer el archivo Excel desde el buffer
+      const workbook = xlsx.read(excelBuffer, { type: 'buffer' });
       const sheetName = workbook.SheetNames[0]; // Tomar la primera hoja del Excel
       const worksheet = workbook.Sheets[sheetName];
 
@@ -47,7 +47,7 @@ const processExcelUpload = (req, res) => {
     }
   })
     .then((formattedData) => {
-      // Buscar si ya existe un documento de menú
+      // Buscar si ya existe un documento de menú y actualizarlo
       return Menu.findOneAndUpdate(
         {}, // Esto busca cualquier documento de menú (porque solo debe haber uno)
         { $set: formattedData }, // Se reemplazan los campos con los nuevos datos
@@ -91,15 +91,8 @@ const processExcelUpload = (req, res) => {
     .catch((error) => {
       console.error('Error al subir y procesar el archivo Excel:', error);
       res.status(500).send('Error al procesar el archivo Excel.');
-    })
-    .finally(() => {
-      // Eliminar el archivo Excel después de procesar
-      fs.unlink(excelPath, (err) => {
-        if (err) console.error('Error al eliminar el archivo:', err);
-      });
     });
 };
-
 
 // Función para mostrar la vista del panel de administración
 const adminPanel = (req, res) => {

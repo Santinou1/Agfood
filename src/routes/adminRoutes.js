@@ -3,8 +3,10 @@ const router = express.Router(); // Crear un enrutador de Express
 const adminController = require('../controllers/adminController'); // Importar el controlador de admin
 const pedidoController = require('../controllers/pedidoController'); // Importar el controlador de pedidos
 const authMiddleware = require('../middleware/authMiddleware'); // Importar el middleware de autenticación
-const upload = require('../middleware/uploadMiddleware');
 const esAdmin = require('../middleware/esAdmin');
+const multer = require('multer');
+const upload = multer({ storage: multer.memoryStorage() });
+
 
 
 // Ruta para renderizar la vista de subir Excel
