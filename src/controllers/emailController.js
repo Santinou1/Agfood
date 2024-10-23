@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const nodemailer = require('nodemailer');
 const axios = require('axios'); // Importar axios para hacer solicitudes HTTP
 const Archivo = require('../models/Archivo');
+const renderMessageAdmin = require('../utils/renderMessageAdmin');
 
 // Configurar el transportador de nodemailer
 const transporter = nodemailer.createTransport({
@@ -62,31 +63,14 @@ const enviarCorreoConExcel = (req, res) => {
             return transporter.sendMail(mailOptions);
         })
         .then(() => {
-            res.status(200).send(`
-                <h2>Felicidades</h2>
-                <p>Se envió correctamente el mail</p>
-                <button onclick="window.location.href='/admin'">Panel Admin</button>
-                <style>
-                    body {
-                        font-family: Arial, sans-serif;
-                        text-align: center;
-                        margin-top: 50px;
-                    }
-                    button {
-                        padding: 10px 15px;
-                        background-color: #007BFF;
-                        color: white;
-                        border: none;
-                        cursor: pointer;
-                        border-radius: 5px;
-                        margin-top: 20px;
-                    }
-                    button:hover {
-                        background-color: #0056b3;
-                    }
-                </style>
-            `);
-        })
+            // Enviar una respuesta al cliente
+            renderMessageAdmin(
+              res,
+              "Felicidades",
+              "Se envio correctamente el Mail.",
+              "/admin" // Redirigir a la página principal o donde desees
+            );
+          })
         .catch(error => {
             console.error("Error al enviar el correo:", error);
             res.status(500).send("Error al enviar el correo: " + error);

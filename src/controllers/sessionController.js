@@ -1,5 +1,7 @@
 const bcrypt = require("bcryptjs");
 const Usuario = require("../models/Usuario"); // Asegúrate de que el modelo Usuario esté correctamente importado
+const renderMessage = require('../utils/renderMessage');
+
 
 const login = (req, res) => {
   const { email, password } = req.body;
@@ -8,87 +10,32 @@ const login = (req, res) => {
   Usuario.findOne({ mail: email }) // Buscar al usuario por email
     .then((usuario) => {
       if (!usuario) {
-        return res.send(`
-            <h2>Acceso denegado</h2>
-            <p>No se encontro un usuario registrado con ese mail..</p>
-            <button onclick="window.location.href='/'">Volver a Iniciar Sesión</button>
-            <style>
-                body {
-                    font-family: Arial, sans-serif;
-                    text-align: center;
-                    margin-top: 50px;
-                }
-                button {
-                    padding: 10px 15px;
-                    background-color: #007BFF;
-                    color: white;
-                    border: none;
-                    cursor: pointer;
-                    border-radius: 5px;
-                    margin-top: 20px;
-                }
-                button:hover {
-                    background-color: #0056b3;
-                }
-            </style>
-        `);
-
+        return renderMessage(
+          res,
+          "Acceso Denegado",
+          "No se encontro un usuario registrado con ese mail",
+          "/"
+        );
       }
 
       if (usuario.activo === false) {
-        return res.status(403).send(`
-            <h2>Acceso denegado</h2>
-            <p>Tu cuenta está deshabilitada.</p>
-            <button onclick="window.location.href='/'">Volver a Iniciar Sesión</button>
-            <style>
-                body {
-                    font-family: Arial, sans-serif;
-                    text-align: center;
-                    margin-top: 50px;
-                }
-                button {
-                    padding: 10px 15px;
-                    background-color: #007BFF;
-                    color: white;
-                    border: none;
-                    cursor: pointer;
-                    border-radius: 5px;
-                    margin-top: 20px;
-                }
-                button:hover {
-                    background-color: #0056b3;
-                }
-            </style>
-        `);
+        return renderMessage(
+          res,
+          "Acceso Denegado",
+          "Tu cuenta esta deshabilitada",
+          "/"
+        );
       }
 
       // Comparar la contraseña
       return usuario.compararContraseña(password).then((isMatch) => {
         if (!isMatch) {
-          return res.send(`
-              <h2>Acceso denegado</h2>
-              <p>Contraseña incorrecta</p>
-              <button onclick="window.location.href='/'">Volver a Iniciar Sesión</button>
-              <style>
-                  body {
-                      font-family: Arial, sans-serif;
-                      text-align: center;
-                      margin-top: 50px;
-                  }
-                  button {
-                      padding: 10px 15px;
-                      background-color: #007BFF;
-                      color: white;
-                      border: none;
-                      cursor: pointer;
-                      border-radius: 5px;
-                      margin-top: 20px;
-                  }
-                  button:hover {
-                      background-color: #0056b3;
-                  }
-              </style>
-          `);
+          return renderMessage(
+            res,
+            "Acceso Denegado",
+            "Contraseña Incorrecta",
+            "/"
+          );
         }
 
         // Guardar el email y rol del usuario en la sesión

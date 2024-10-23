@@ -2,6 +2,8 @@ const xlsx = require("xlsx");
 const fs = require("fs");
 const Menu = require("../models/Menu")
 const path = require("path");
+const renderMessageAdmin = require("../utils/renderMessageAdmin");
+
 
 const processExcelUpload = (req, res) => {
   // Obtener el buffer del archivo subido (usando multer en memoria)
@@ -62,31 +64,12 @@ const processExcelUpload = (req, res) => {
     })
     .then(() => {
       // Enviar una respuesta al cliente
-      res.send(`
-        <h2>Felicidades</h2>
-        <p>La subida de archivos fue exitosa y el menú ha sido actualizado en la base de datos.</p>
-        <button onclick="window.location.href='/'">Volver al Panel de Administración</button>
-        <style>
-          body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin-top: 50px;
-          }
-          button {
-            text-decoration: none;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            cursor: pointer;
-            border-radius: 5px;
-            font-size: 16px;
-          }
-          button:hover {
-            background-color: #0056b3;
-          }
-        </style>
-      `);
+      renderMessageAdmin(
+        res,
+        "Felicidades",
+        "La subida de archivos fue exitosa y el menú ha sido actualizado en la base de datos.",
+        "/admin" // Redirigir a la página principal o donde desees
+      );
     })
     .catch((error) => {
       console.error('Error al subir y procesar el archivo Excel:', error);
