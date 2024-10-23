@@ -26,7 +26,7 @@ const enviarCorreoConExcel = (req, res) => {
         .then(archivo => {
             // Si el archivo no existe, lo creamos haciendo la llamada a la ruta correspondiente
             if (!archivo) {
-                return axios.get(`http://localhost:4000/api/pedidos/guardarExcel?fecha=${fecha}`)
+                return axios.get(`http://agfood.vercel.app/api/pedidos/guardarExcel?fecha=${fecha}`)
                     .then(response => {
                         console.log('Archivo creado:', response.data);
                         
