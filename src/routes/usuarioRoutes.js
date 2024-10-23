@@ -11,7 +11,7 @@ router.get('/crear', authMiddleware,esAdmin,  (req, res) => {
 });
 
 // Ruta para crear un nuevo usuario (POST)
-router.post('/crear',esAdmin, authMiddleware, usuarioController.crearUsuario);
+router.post('/crear', usuarioController.crearUsuario);
 
 // Ruta para listar todos los usuarios (GET)
 router.get('/listar',esAdmin, authMiddleware, usuarioController.listarUsuarios);
@@ -24,7 +24,7 @@ router.get('/actualizar/:id',esAdmin, authMiddleware, usuarioController.renderiz
 
 
 // Ruta para eliminar un usuario por el id (DELETE)
-router.delete('/eliminar/:id',esAdmin, authMiddleware, usuarioController.eliminarUsuario);
+router.delete('/eliminar/:id', usuarioController.eliminarUsuario);
 
 // Ruta para altenar estado de un usuario
 router.post('/alternar/:id',esAdmin, authMiddleware, usuarioController.alternarEstadoUsuario); 
