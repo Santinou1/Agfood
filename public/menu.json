@@ -1,0 +1,89 @@
+{
+  "menuDelDia": [
+    "Pata y muslo con ensalada",
+    "Pechuga grille gratinada con puré de papas",
+    "Canelones mixtos con crema de espinaca",
+    "Sandwich de milanesa con lechuga y tomate",
+    "Sorrentinos con crema de Roquefort y jamón"
+  ],
+  "empanadas": [
+    "Pollo",
+    "JQ",
+    "Matambre",
+    "Bondiola",
+    "Carne",
+    "CQ",
+    "Verdura",
+    "Calabaza",
+    "Capresse"
+  ],
+  "tartas": [
+    "Jamón y queso",
+    "Cebolla y queso",
+    "Verdura (acelga, huevo, queso...)",
+    "Pollo",
+    "Calabaza y queso mozzarella",
+    "Brócoli",
+    "Zapallito",
+    "Pollo y champiñones",
+    "Capresse (tomate, queso y albahaca)",
+    "Atún (consultar)"
+  ],
+  "pastasCocidas": [
+    "Fideos cintas al huevo",
+    "Fideos cintas de espinaca",
+    "Fucciles",
+    "Ñoquis de papa",
+    "Ñoquis de espinaca",
+    "Sorrentinos de jamón...",
+    "Triangulitos de 4 quesos"
+  ],
+  "ravioles": [
+    "Ricota y parmesano",
+    "Napolitanos (espinaca, muzarella...)",
+    "Especiales (pollo, verdura y provolone)",
+    "Calabaza (calabaza, queso por salud...)",
+    "Caseros (verdura, carne y queso)",
+    "Serranos (espinaca, queso y jamón...)",
+    "Munich (ricota, panceta...)",
+    "Piamonteses (ricota, queso...)",
+    "Capeletis (consultar)"
+  ],
+  "salsas": [
+    "Bolognesa",
+    "Salsa blanca",
+    "Fileto",
+    "Mixta",
+    "Rosa",
+    "Pesto",
+    "Crema",
+    "Manteca",
+    "Aceite"
+  ],
+  "ensaladas": [
+    "Ensalada Grande",
+    "Ensalada Chica",
+    "Ensalada César"
+  ],
+  "ingredientesEnsalada": [
+    "Brócoli",
+    "Remolacha",
+    "Zanahoria",
+    "Pepino",
+    "Chaucha",
+    "Arveja",
+    "Lentejas",
+    "Huevo",
+    "Arroz blanco",
+    "Arroz integral",
+    "Repollo Colorado",
+    "Tomate Cortado",
+    "Tomate Cherry",
+    "Apio",
+    "Rúcula",
+    "Lechuga",
+    "Fideos",
+    "Queso",
+    "Cherry con oliva"
+  ]
+}

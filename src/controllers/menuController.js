@@ -1,4 +1,4 @@
-const menuData = require('../../data/menu.json'); // Importar datos del menú desde un archivo JSON
+const menuData = require('../../public/menu.json'); // Importar datos del menú desde un archivo JSON
 
 // Función para obtener el menú y enviarlo como respuesta JSON
 exports.getMenu = (req, res) => {

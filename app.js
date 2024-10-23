@@ -9,7 +9,9 @@ const usuarioRoutes = require('./src/routes/usuarioRoutes'); // Importar las rut
 const sessionRoutes = require("./src/routes/sessionRoutes")
 const authMiddleware = require('./src/middleware/authMiddleware'); // Importar el middleware de autenticación
 const methodOverride = require('method-override');
-
+const RedisStore = require('connect-redis').default;
+const Redis = require('ioredis');
+const redisClient = new Redis("redis://default:6872rF6tRXp4vyri2vvyGGj1pwgNs0Ue@redis-16424.c274.us-east-1-3.ec2.redns.redis-cloud.com:16424");
 
 
 const app = express();
@@ -24,6 +26,9 @@ app.set('views', path.join(__dirname, 'src', 'views'));
 // Middleware para servir archivos estáticos desde la carpeta public
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(express.static('public'));
+
+
 // Middleware para procesar body como JSON y formularios
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -33,10 +38,16 @@ app.use(methodOverride('_method'));
 
 // Configurar sesiones
 app.use(session({
-    secret: 'tu-secreto', // Cambia esto a una cadena aleatoria en producción
+    store: new RedisStore({ client: redisClient }),
+    secret: "secret",
     resave: false,
-    saveUninitialized: true,
-}));
+    saveUninitialized: false,
+    cookie: {
+      httpOnly: true,
+      secure: "secreto" === 'production',
+      sameSite: 'lax'
+    }
+  }));
 
 // Configuración de las rutas
 app.use('/api/menu', menuRoutes);
@@ -60,7 +71,10 @@ app.get('/pedido', authMiddleware, (req, res) => {
 
 
 // Configuración del puerto de escucha
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
     console.log(`Servidor escuchando en el puerto http://localhost:${PORT}`);
 });
+
+
+module.exports = app;

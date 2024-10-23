@@ -1,97 +1,98 @@
-const mailService = require("../utils/mailService");
-const fs = require("fs");
-const path = require("path");
+const mongoose = require('mongoose');
+const nodemailer = require('nodemailer');
+const axios = require('axios'); // Importar axios para hacer solicitudes HTTP
+const Archivo = require('../models/Archivo');
 
-/**
- * Controlador para enviar el correo con el Excel adjunto.
- * @param {Object} req - La solicitud de Express.
- * @param {Object} res - La respuesta de Express.
- */
-exports.enviarCorreoConExcel = (req, res) => {
-  // Obtener la fecha de los parámetros de la consulta
-  const fecha = req.query.fecha; // Cambiado para obtener la fecha de los parámetros de la consulta
+// Configurar el transportador de nodemailer
+const transporter = nodemailer.createTransport({
+    service: 'gmail', // Cambia esto según tu proveedor de correo
+    auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS
+    }
+});
 
-  console.log("Fecha recibida:", fecha); // Para depurar y ver qué fecha se recibe
+// Controlador para enviar el correo con el Excel adjunto
+const enviarCorreoConExcel = (req, res) => {
+    const fecha = req.query.fecha || new Date().toISOString().split('T')[0]; // Usar la fecha proporcionada o la fecha actual
 
-  // Verificar si la fecha fue proporcionada
-  if (!fecha) {
-    return res.status(400).send("Fecha no proporcionada en la solicitud.");
-  }
-
-  // Construir la ruta del archivo Excel
-  const excelFilePath = path.join("../../Desktop/AG/informes", `pedidos_${fecha}.xlsx`);
-  const attachmentName = `pedidos_${fecha}.xlsx`;
-
-  // Verificar si el archivo existe antes de enviarlo
-  fs.access(excelFilePath, fs.constants.F_OK, (err) => {
-    if (err) {
-      console.error("Error al acceder al archivo:", err); // Imprimir el error en la consola para depuración
-      return res
-        .status(404)
-        .send(`
-          <h2>Ocurrio un Error</h2>
-          <p>Corrobore que tiene descargado el archivo Excel</p>
-          <a href="/api/pedidos/buscar" class="admin-button">Ir a descargar el excel</a>
-
-          <style>
-              body {
-                  font-family: Arial, sans-serif;
-                  text-align: center;
-                  margin-top: 50px;
-              }
-              button {
-                  padding: 10px 15px;
-                  background-color: #007BFF;
-                  color: white;
-                  border: none;
-                  cursor: pointer;
-                  border-radius: 5px;
-                  margin-top: 20px;
-              }
-              button:hover {
-                  background-color: #0056b3;
-              }
-          </style>
-      `);
+    // Verificar si la fecha fue proporcionada
+    if (!fecha) {
+        return res.status(400).send("Fecha no proporcionada en la solicitud.");
     }
 
-    mailService
-      .sendMail(
-        "santinolursino@gmail.com", // Cambia por el email del destinatario
-        `Pedidos del ${fecha}`,
-        `Adjunto encontrarás el Excel con los pedidos del ${fecha}.`,
-        excelFilePath,
-        attachmentName
-      )
-      .then(() => res.send(`
-  <h2>Congratulations</h2>
-  <p>Se envio el mail correctamente!</p>
-  <a href="/admin" class="admin-button">Ir al panel admin</a>
+    // Buscar el archivo en MongoDB
+    Archivo.findOne({ nombre: `pedidos_${fecha}.xlsx` })
+        .then(archivo => {
+            // Si el archivo no existe, lo creamos haciendo la llamada a la ruta correspondiente
+            if (!archivo) {
+                return axios.get(`http://localhost:4000/api/pedidos/guardarExcel?fecha=${fecha}`)
+                    .then(response => {
+                        console.log('Archivo creado:', response.data);
+                        
+                        // Después de crear el archivo, volvemos a buscarlo en la base de datos
+                        return Archivo.findOne({ nombre: `pedidos_${fecha}.xlsx` });
+                    })
+                    .then(newArchivo => {
+                        if (!newArchivo) {
+                            return res.status(404).send("Error al crear el archivo en MongoDB.");
+                        }
+                        return newArchivo;
+                    });
+            }
+            return archivo; // Retornar el archivo existente
+        })
+        .then(archivo => {
+            // Asegúrate de que 'contenido' es un Buffer
+            let contenidoBuffer = Buffer.isBuffer(archivo.contenido) ? archivo.contenido : Buffer.from(archivo.contenido);
 
-  <style>
-      body {
-          font-family: Arial, sans-serif;
-          text-align: center;
-          margin-top: 50px;
-      }
-      button {
-          padding: 10px 15px;
-          background-color: #007BFF;
-          color: white;
-          border: none;
-          cursor: pointer;
-          border-radius: 5px;
-          margin-top: 20px;
-      }
-      button:hover {
-          background-color: #0056b3;
-      }
-  </style>
-`))
-      .catch((error) => {
-        console.error("Error al enviar el correo:", error); // Imprimir el error en la consola para depuración
-        res.status(500).send("Error al enviar el correo: " + error);
-      });
-  });
+            // Enviar el correo
+            const mailOptions = {
+                from: process.env.EMAIL_USER, // Remitente
+                to: "santinolursino@gmail.com", // Cambia por el email del destinatario
+                subject: `Pedidos del ${fecha}`,
+                text: `Adjunto encontrarás el Excel con los pedidos del ${fecha}.`,
+                attachments: [{
+                    filename: archivo.nombre,
+                    content: contenidoBuffer, // Aquí está el contenido del archivo como Buffer
+                    contentType: archivo.tipo // Asegúrate de que esto sea un tipo MIME válido
+                }]
+            };
+
+            return transporter.sendMail(mailOptions);
+        })
+        .then(() => {
+            res.status(200).send(`
+                <h2>Felicidades</h2>
+                <p>Se envió correctamente el mail</p>
+                <button onclick="window.location.href='/admin'">Panel Admin</button>
+                <style>
+                    body {
+                        font-family: Arial, sans-serif;
+                        text-align: center;
+                        margin-top: 50px;
+                    }
+                    button {
+                        padding: 10px 15px;
+                        background-color: #007BFF;
+                        color: white;
+                        border: none;
+                        cursor: pointer;
+                        border-radius: 5px;
+                        margin-top: 20px;
+                    }
+                    button:hover {
+                        background-color: #0056b3;
+                    }
+                </style>
+            `);
+        })
+        .catch(error => {
+            console.error("Error al enviar el correo:", error);
+            res.status(500).send("Error al enviar el correo: " + error);
+        });
 };
 
+module.exports = {
+    enviarCorreoConExcel
+};

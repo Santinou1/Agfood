@@ -1,7 +1,7 @@
 const xlsx = require("xlsx");
 const fs = require("fs");
 const path = require("path");
-const dataFilePath = path.join(__dirname, "../../data/menu.json");
+const dataFilePath = path.join(__dirname, "../../public/menu.json");
 
 // Función para procesar el archivo Excel y actualizar el JSON
 const procesarExcelYActualizarJSON = (req, res) => {
@@ -67,7 +67,7 @@ const processExcelUpload = (req, res) => {
   });
 
   // Guardar los datos en el archivo menu.json
-  const jsonPath = path.join(__dirname, "../../data/menu.json");
+  const jsonPath = path.join(__dirname, "../../public/menu.json");
   fs.writeFileSync(jsonPath, JSON.stringify(formattedData, null, 2), "utf-8");
 
   // Enviar una respuesta al cliente

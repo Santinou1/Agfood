@@ -40,7 +40,7 @@ data.slice(1).forEach(row => {
 });
 
 // Guardar los datos en el archivo data.json
-fs.writeFileSync(path.join(__dirname, '../../data/menu.json'), JSON.stringify(formattedData, null, 2), 'utf-8');
+fs.writeFileSync(path.join(__dirname, '../../public/menu.json'), JSON.stringify(formattedData, null, 2), 'utf-8');
 
 console.log('Archivo JSON actualizado con éxito');
     

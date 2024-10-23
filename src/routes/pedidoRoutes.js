@@ -24,6 +24,12 @@ router.get("/descargarExcel/:fecha",authMiddleware,esAdmin, pedidoController.exp
 // Ruta para enviar el correo
 router.get('/enviarMail',esAdmin, authMiddleware, emailController.enviarCorreoConExcel); // Usar el controlador para enviar correo
 
+// Ruta para guardar el excel en mongo
+router.get('/guardarExcel', pedidoController.guardarExcelEnMongo);
+
+// Ruta para obtener el archivo por nombre
+router.get('/archivo/:nombre', pedidoController.obtenerArchivoExcel); 
+
 
 
 module.exports = router; // Exportar el enrutador para ser utilizado por la aplicación
