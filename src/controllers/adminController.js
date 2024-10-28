@@ -1,25 +1,60 @@
 const xlsx = require("xlsx");
-const fs = require("fs");
-const Menu = require("../models/Menu")
-const path = require("path");
+const Menu = require("../models/Menu");
+const Usuario = require("../models/Usuario");
+const nodemailer = require("nodemailer");
 const renderMessageAdmin = require("../utils/renderMessageAdmin");
 
+// Función para enviar correos masivos a todos los usuarios
+const sendBulkMail = () => {
+  const transporter = nodemailer.createTransport({
+    service: 'Gmail',
+    auth: {
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS,
+    },
+  });
 
+  return Usuario.find({}, 'mail')  // Obtener todos los correos electrónicos de los usuarios
+    .then((usuarios) => {
+      const emailList = usuarios.map((user) => user.mail);
+
+      const mailOptions = {
+        from: process.env.EMAIL_USER,
+        to: emailList,
+        subject: '¡Actualización del Menú! ¡Ya puedes hacer tu pedido!',
+        text: 'El menú ha sido actualizado exitosamente. Por favor, revisa los nuevos cambios.',
+        html: `
+            <div style="font-family: Arial, sans-serif; margin: 20px; padding: 20px; background-color: rgba(255, 255, 255, 0.9); border-radius: 8px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);">
+                <h2 style="color: rgba(241, 102, 37, 1);">¡El Menú ha sido Actualizado!</h2>
+                <p style="color: rgba(76, 76, 78, 1);">Nos complace informarte que el menú ha sido actualizado exitosamente. Ya puedes hacer tu pedido.</p>
+                <p style="color: rgba(76, 76, 78, 1);">Por favor, revisa los nuevos cambios y selecciona tus opciones favoritas.</p>
+                <a href="https://agfood.vercel.app/" style="display: inline-block; margin-top: 20px; padding: 10px 20px; background-color: rgba(241, 102, 37, 1); color: white; text-decoration: none; border-radius: 5px; font-weight: bold;">Hacer Pedido</a>
+            </div>
+        `,
+    };
+
+      return transporter.sendMail(mailOptions);
+    })
+    .then(() => {
+      console.log("Correo masivo enviado exitosamente");
+    })
+    .catch((error) => {
+      console.error('Error al enviar el correo masivo:', error);
+      throw error;
+    });
+};
+
+// Función para procesar la subida del archivo Excel
 const processExcelUpload = (req, res) => {
-  // Obtener el buffer del archivo subido (usando multer en memoria)
   const excelBuffer = req.file.buffer;
 
-  return new Promise((resolve, reject) => {
+  new Promise((resolve, reject) => {
     try {
-      // Leer el archivo Excel desde el buffer
       const workbook = xlsx.read(excelBuffer, { type: 'buffer' });
-      const sheetName = workbook.SheetNames[0]; // Tomar la primera hoja del Excel
+      const sheetName = workbook.SheetNames[0];
       const worksheet = workbook.Sheets[sheetName];
-
-      // Convertir los datos de la hoja a un array de arrays
       const data = xlsx.utils.sheet_to_json(worksheet, { header: 1 });
 
-      // Estructurar los datos en formato JSON
       let formattedData = {
         menuDelDia: [],
         empanadas: [],
@@ -31,7 +66,6 @@ const processExcelUpload = (req, res) => {
         ingredientesEnsalada: []
       };
 
-      // Procesar las filas del Excel, ignorando la primera (que es el encabezado)
       data.slice(1).forEach((row) => {
         if (row[0]) formattedData.menuDelDia.push(row[0]);
         if (row[1]) formattedData.empanadas.push(row[1]);
@@ -49,11 +83,11 @@ const processExcelUpload = (req, res) => {
     }
   })
     .then((formattedData) => {
-      // Buscar si ya existe un documento de menú y actualizarlo
+      // Actualizar el documento de menú en la base de datos
       return Menu.findOneAndUpdate(
-        {}, // Esto busca cualquier documento de menú (porque solo debe haber uno)
-        { $set: formattedData }, // Se reemplazan los campos con los nuevos datos
-        { upsert: true, new: true, setDefaultsOnInsert: true } // upsert: true inserta si no existe
+        {},
+        { $set: formattedData },
+        { upsert: true, new: true, setDefaultsOnInsert: true }
       );
     })
     .then((menu) => {
@@ -63,26 +97,28 @@ const processExcelUpload = (req, res) => {
       return menu;
     })
     .then(() => {
-      // Enviar una respuesta al cliente
+      // Renderizar mensaje de éxito
       renderMessageAdmin(
         res,
         "Felicidades",
         "La subida de archivos fue exitosa y el menú ha sido actualizado en la base de datos.",
-        "/admin" // Redirigir a la página principal o donde desees
+        "/admin"
       );
+      
+      // Enviar correos electrónicos masivos
+      return sendBulkMail();
     })
     .catch((error) => {
-      console.error('Error al subir y procesar el archivo Excel:', error);
-      res.status(500).send('Error al procesar el archivo Excel.');
+      console.error('Error al subir y procesar el archivo Excel o enviar el correo:', error);
+      res.status(500).send('Error al procesar el archivo Excel o enviar el correo masivo.');
     });
 };
 
 // Función para mostrar la vista del panel de administración
 const adminPanel = (req, res) => {
-  res.render("adminPanel"); // Renderiza la vista del panel de admin
+  res.render("adminPanel");
 };
 
-// Exportar las funciones utilizando module.exports
 module.exports = {
   adminPanel,
   processExcelUpload,
