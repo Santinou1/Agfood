@@ -43,15 +43,17 @@
     <h2>Panel de Administrador</h2>
 
     <div class="button-container">
-        <a href="/pedido" class="button">Hacer un pedido</a>
-        <a href="/api/usuarios/listar" class="button">ABM</a>
-        <a href="/api/pedidos/buscar" class="button">Buscar Pedidos</a>
-        <a href="/admin/subir-excel" class="button">Subir Excel</a> <!-- Nuevo botón -->
-        <form id="sendMailForm" action="/api/pedidos/enviarMail" method="GET">
-            <input type="hidden" id="fechaInput" name="fecha"> <!-- Campo oculto para la fecha -->
-            <button type="submit">Enviar Mail</button>
-        </form>        
+        <a href="/pedido" class="panel-button">Hacer un pedido</a>
+        <a href="/api/usuarios/listar" class="panel-button">ABM</a>
+        <a href="/api/pedidos/buscar" class="panel-button">Buscar Pedidos</a>
+        <a href="/admin/subir-excel" class="panel-button">Subir Excel</a> <!-- Nuevo botón -->
+   
     </div>
+
+    <form id="sendMailForm" action="/api/pedidos/enviarMail" method="GET">
+        <input type="hidden" id="fechaInput" name="fecha"> <!-- Campo oculto para la fecha -->
+        <button type="submit" class="panel-button" style="background-color:  rgba(241,102,37,255);">Enviar Mail</button>
+    </form>        
 
     <a href="/api/logout" class="cerrarSesion">Cerrar Sesión</a>
 

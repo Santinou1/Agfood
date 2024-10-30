@@ -101,7 +101,7 @@ const processExcelUpload = (req, res) => {
       renderMessageAdmin(
         res,
         "Felicidades",
-        "La subida de archivos fue exitosa y el menú ha sido actualizado en la base de datos.",
+        "La subida de archivos fue exitosa, se les envio un correo a todos los empleados y el menú ha sido actualizado en la base de datos.",
         "/admin"
       );
       

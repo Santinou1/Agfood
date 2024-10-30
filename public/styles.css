@@ -163,9 +163,12 @@ td[colspan="9"] {
     font-style: italic;
 }
 
-/* Botones en contenedor */
 .button-container {
-    margin: 20px 0;
+    display: flex;
+    justify-content: center; /* Centra los botones */
+    gap: 10px; /* Espacio entre los botones */
+    flex-wrap: wrap; /* Permite que los botones salten a otra línea si no hay suficiente espacio */
+    margin-top: 20px;
 }
 
 .button {
@@ -232,4 +235,20 @@ a:hover {
     height: auto;
     display: block;
     margin: 0 auto;
+}
+
+.panel-button {
+    padding: 10px 20px;
+    background-color: rgba(76, 76, 78, 255); /* Gris oscuro */
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    text-align: center;
+    width: 120px; /* Ajusta este ancho según el espacio necesario */
+    transition: background-color 0.3s;
+}
+
+.panel-button:hover {
+    background-color: rgba(50, 50, 52, 255); /* Gris más oscuro para hover */
 }
