@@ -50,7 +50,7 @@ const enviarCorreoConExcel = (req, res) => {
             // Enviar el correo
             const mailOptions = {
                 from: process.env.EMAIL_USER, // Remitente
-                to: "santinolursino@gmail.com", // Cambia por el email del destinatario
+                to: process.env.EMAIL_SEND, // Cambia por el email del destinatario
                 subject: `Pedidos del ${fecha}`,
                 text: `Adjunto encontrarás el Excel con los pedidos del ${fecha}.`,
                 attachments: [{
