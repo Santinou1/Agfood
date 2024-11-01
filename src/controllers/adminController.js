@@ -121,5 +121,5 @@ const adminPanel = (req, res) => {
 
 module.exports = {
   adminPanel,
-  processExcelUpload,
+  processExcelUpload
 };
