@@ -38,7 +38,7 @@
         "node-imap": "^0.9.6",
         "nodemailer": "^6.9.15",
         "simple-imap": "^0.1.6",
-        "vercel": "^28.18.5",
+        "vercel": "^39.0.2",
         "xlsx": "^0.18.5"
     },
     "devDependencies": {
